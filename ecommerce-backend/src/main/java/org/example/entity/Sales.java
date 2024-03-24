@@ -1,6 +1,5 @@
 package org.example.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,27 +11,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "stock")
-public class Stock{
+@Table(name = "Sales")
+public class Sales {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "Color")
-    private  String color;
+    @Column(name = "Total Price")
+    private  String price;
 
-    @Column(name = "size")
-    private String size;
-
-    @Column(name = "price")
-    private String price;
-
-    @Column(name = "quantity")
+    @Column(name = "Total Quantity")
     private String qty;
 
 }

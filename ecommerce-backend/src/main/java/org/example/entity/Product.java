@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import edu.clothing.entity.SubCategory;
 
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class Product {
     private  String desc;
 
     @Column(name = "price")
-    private String price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -40,11 +42,14 @@ public class Product {
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    @Column(name = "Total Sales")
-    private String sales;
+    @Column(name = "sold_count")
+    private int soldCount;
 
-    @Column(name = "Sold_Count")
-    private  String soldOut;
+    @OneToOne(mappedBy = "product",cascade = CascadeType.ALL)
+    private Sales sales;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Stock> stocks;
 
     @Lob
     private byte[] imageData;
