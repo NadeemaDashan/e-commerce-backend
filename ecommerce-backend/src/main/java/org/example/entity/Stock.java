@@ -23,6 +23,9 @@ public class Stock{
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @OneToOne(mappedBy = "stock")
+    private Cart cart;
+
     @Column(name = "Color")
     private  String color;
 

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -15,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CustomerID")
     private Long id;
 
     @Column(name = "Email")
@@ -29,4 +30,10 @@ public class Customer {
 
     @Column(name ="Contact")
     private String phone;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Orders> orders;
+
+    @OneToMany(mappedBy = "customer")
+    private List<BillingInfo> billingInfo;
 }
