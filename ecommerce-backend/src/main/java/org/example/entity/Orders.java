@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.util.converter.OrderStatusConverter;
+import org.example.util.enums.OrderStatus;
 
 
 @Entity
@@ -57,6 +59,8 @@ public class Orders {
     private Payment payment;
 
     @Column(name = "Delivery Status" , nullable = false)
-    private boolean status;
+    @Convert(converter =  OrderStatusConverter.class)
+    private OrderStatus status;
+
 
 }
