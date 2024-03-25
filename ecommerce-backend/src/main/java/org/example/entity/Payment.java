@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.util.enums.PaymentStatus;
-import org.example.util.enums.PaymentType;
+
 
 
 @Entity
@@ -27,11 +26,9 @@ public class Payment {
     private String Tot;
 
     @Column(name = "Payment Status" , nullable = false)
-    @Convert(converter =  PaymentStatus.class)
-    private PaymentStatus status;
+    private boolean status;
 
     @Column(name = "Payment Type" , nullable = false)
-    @Convert(converter =  PaymentType.class)
-    private PaymentType type;
+    private String paymentType;
 
 }

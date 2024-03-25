@@ -1,4 +1,4 @@
-package edu.clothing.entity;
+package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,7 @@ public class SubCategory {
     @Column(name = "Sub Category Name" , nullable = false)//join
     private String name;
 
-    @OneToMany(mappedBy = "sub_category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subCategory", cascade = CascadeType.ALL)
     private List<Product> products;
+
 }

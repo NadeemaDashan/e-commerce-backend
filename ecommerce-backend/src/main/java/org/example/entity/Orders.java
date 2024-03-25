@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.util.enums.OrderStatus;
 
 
 @Entity
@@ -57,8 +56,7 @@ public class Orders {
     @OneToOne(mappedBy = "orders")
     private Payment payment;
 
-    @Column(name = "Dilivery Status" , nullable = false)
-    @Convert(converter =  OrderStatus.class)
-    private OrderStatus status;
+    @Column(name = "Delivery Status" , nullable = false)
+    private boolean status;
 
 }
