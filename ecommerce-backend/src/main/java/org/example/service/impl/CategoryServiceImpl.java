@@ -5,6 +5,7 @@ import org.example.dto.CategoryDto;
 import org.example.entity.Category;
 import org.example.repository.CategoryRepository;
 import org.example.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,13 +14,11 @@ import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
+    @Autowired
+    private  CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, ObjectMapper objectMapper) {
-        this.categoryRepository = categoryRepository;
-        this.objectMapper = objectMapper;
-    }
-    private  final ObjectMapper objectMapper;
+    @Autowired
+    private  ObjectMapper objectMapper;
 
     @Override
     public boolean saveCategory(CategoryDto categoryDto) {
@@ -33,8 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCategories() {
-       Iterable<Category> iterableCateogries=categoryRepository.findAll();
-       Iterator<Category> iterateCategories=iterableCateogries.iterator();
+       Iterable<Category> iterableCategories=categoryRepository.findAll();
+       Iterator<Category> iterateCategories=iterableCategories.iterator();
        List <CategoryDto> allCategoryDtos = new ArrayList<>();
        while (iterateCategories.hasNext()){
             Category category=iterateCategories.next();
@@ -47,12 +46,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto getCategoryByName(String name) {
         Category category=categoryRepository.getByName(name);
-        CategoryDto categoryDto=objectMapper.convertValue(category,CategoryDto.class);
-        return categoryDto;
+        return objectMapper.convertValue(category,CategoryDto.class);
     }
 
     @Override
-    public boolean deletecategoryByName(String name) {
+    public boolean deleteCategoryByName(String name) {
        CategoryDto category=getCategoryByName(name);
        categoryRepository.deleteById(category.getId());
        return true;

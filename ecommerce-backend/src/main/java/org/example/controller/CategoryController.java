@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.dto.CategoryDto;
 import org.example.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,12 +11,9 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/category")
 public class CategoryController {
+    @Autowired
+    private CategoryService categoryService;
 
-    private final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @PostMapping("/add")
     public boolean addCategory(@RequestBody CategoryDto categoryDto){
@@ -34,6 +32,6 @@ public class CategoryController {
 
     @DeleteMapping("/delete/{name}")
     public Boolean deleteCategoryByName(@PathVariable String name){
-        return categoryService.deletecategoryByName(name);
+        return categoryService.deleteCategoryByName(name);
     }
 }
