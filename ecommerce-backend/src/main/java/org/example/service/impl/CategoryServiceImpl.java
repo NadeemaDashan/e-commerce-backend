@@ -1,26 +1,60 @@
-//package org.example.service.impl;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import org.example.dto.CategoryDto;
-//import org.example.entity.Category;
-//import org.example.repository.CategoryRepository;
-//import org.example.service.CategoryService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//@Service
-//public class CategoryServiceImpl implements CategoryService {
-//    private final CategoryRepository categoryRepository;
-//
-//    public CategoryServiceImpl(CategoryRepository categoryRepository, ObjectMapper objectMapper) {
-//        this.categoryRepository = categoryRepository;
-//        this.objectMapper = objectMapper;
-//    }
-//    private  final ObjectMapper objectMapper;
-//
-//    @Override
-//    public boolean saveCategory(CategoryDto categoryDto) {
-//        Category category=objectMapper.convertValue(categoryDto, Category.class);
-//        categoryRepository.save(category);
-//    }
-//}
+package org.example.service.impl;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.dto.CategoryDto;
+import org.example.entity.Category;
+import org.example.repository.CategoryRepository;
+import org.example.service.CategoryService;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+    private final CategoryRepository categoryRepository;
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ObjectMapper objectMapper) {
+        this.categoryRepository = categoryRepository;
+        this.objectMapper = objectMapper;
+    }
+    private  final ObjectMapper objectMapper;
+
+    @Override
+    public boolean saveCategory(CategoryDto categoryDto) {
+        Category category=objectMapper.convertValue(categoryDto, Category.class);
+        Category savedCategory =categoryRepository.save(category);
+        if (savedCategory.getId()!=null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategories() {
+       Iterable<Category> iterableCateogries=categoryRepository.findAll();
+       Iterator<Category> iterateCategories=iterableCateogries.iterator();
+       List <CategoryDto> allCategoryDtos = new ArrayList<>();
+       while (iterateCategories.hasNext()){
+            Category category=iterateCategories.next();
+            CategoryDto categoryDto=objectMapper.convertValue(category,CategoryDto.class);
+            allCategoryDtos.add(categoryDto);
+       }
+       return allCategoryDtos;
+    }
+
+    @Override
+    public CategoryDto getCategoryByName(String name) {
+        Category category=categoryRepository.getByName(name);
+        CategoryDto categoryDto=objectMapper.convertValue(category,CategoryDto.class);
+        return categoryDto;
+    }
+
+    @Override
+    public boolean deletecategoryByName(String name) {
+       CategoryDto category=getCategoryByName(name);
+       categoryRepository.deleteById(category.getId());
+       return true;
+    }
+}
