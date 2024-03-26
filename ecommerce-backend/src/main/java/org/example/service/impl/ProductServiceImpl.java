@@ -1,7 +1,5 @@
 package org.example.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.controller.CategoryController;
 import org.example.dto.CategoryDto;
 import org.example.dto.ProductDto;
 import org.example.entity.Category;
