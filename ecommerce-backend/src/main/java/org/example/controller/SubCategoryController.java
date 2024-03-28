@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.dto.ProductDto;
-import org.example.service.ProductService;
+import org.example.dto.SubCategoryDto;
+import org.example.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -16,30 +16,25 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/product")
-public class ProductController {
-    @Valid
+@RequestMapping("/subCategory")
+public class SubCategoryController {
     @Autowired
-    private ProductService productService;
-
+    SubCategoryService subCategoryService;
     @PostMapping("/add")
-    public String addProduct(@Valid @RequestBody ProductDto productDto){
-        boolean isSaved=productService.addProduct(productDto);
-        if (isSaved==false){
-            return "unsuccessful due to category,subcategory or collection is empty";
-        }
-        return "Product successfully saved";
+    public boolean addSubcategory(@Valid @RequestBody SubCategoryDto subCategoryDto){
+        return subCategoryService.saveSubCategory(subCategoryDto);
     }
 
-    @GetMapping("/get/all")
-    public List<ProductDto> getAllProducts(){
-        return productService.getAllProducts();
+    @GetMapping("/getAll")
+    public List<SubCategoryDto> getAllSubCategories(){
+        return subCategoryService.getAllSubCategories();
     }
 
     @GetMapping("/get/{id}")
-    public ProductDto getProductById(@Valid @PathVariable Long id){
-       return productService.getProductById(id);
+    public SubCategoryDto getSubcategoryById(@PathVariable Long id){
+        return subCategoryService.getSubCategoryById(id);
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> error(MethodArgumentNotValidException exception){

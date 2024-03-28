@@ -33,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean addProduct(ProductDto productDto) {
+        if (productDto.getCategory().getName()==null){
+            return false;
+        }
         CategoryDto category=categoryService.getCategoryByName(productDto.getCategory().getName());
         Long id=category.getId();
         Product product = Product.builder().
