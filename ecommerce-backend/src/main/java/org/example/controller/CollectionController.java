@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.dto.ProductDto;
-import org.example.service.ProductService;
+import org.example.dto.CollectionDto;
+import org.example.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -15,35 +15,35 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/collection")
 @CrossOrigin
-@RequestMapping("/product")
-public class ProductController {
-    @Valid
+public class CollectionController {
     @Autowired
-    private ProductService productService;
+    CollectionService collectionService;
 
     @PostMapping("/add")
-    public String addProduct(@Valid @RequestBody ProductDto productDto){
-        boolean isSaved=productService.addProduct(productDto);
-        if (isSaved==false){
-            return "unsuccessful due to category,subcategory or collection is empty";
-        }
-        return "Product successfully saved";
+    public boolean addSubcategory(@Valid @RequestBody CollectionDto collectionDto){
+        return collectionService.saveCollection(collectionDto);
     }
 
-    @GetMapping("/get/all")
-    public List<ProductDto> getAllProducts(){
-        return productService.getAllProducts();
+    @GetMapping("/getAll")
+    public List<CollectionDto> getAllSubCategories(){
+        return collectionService.getAllCollection();
     }
 
     @GetMapping("/get/{id}")
-    public ProductDto getProductById(@Valid @PathVariable Long id){
-       return productService.getProductById(id);
+    public CollectionDto getCollectionById(@PathVariable Long id){
+        return collectionService.getCollectionById(id);
     }
 
-    @GetMapping("/get/category/{category}")
-    public List getProductByCategory(@PathVariable String category){
-        return productService.getProductByCategory(category);
+    @DeleteMapping("/delete/{id}")
+    public boolean deleteCollectionById(@PathVariable Long id){
+        boolean isDeleted= collectionService.deleteCollectionById(id);
+        return isDeleted;
+    }
+    @GetMapping("/get/name/{name}")
+    public CollectionDto getCollectionByName(@PathVariable String name){
+        return collectionService.getCategoryByName(name);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

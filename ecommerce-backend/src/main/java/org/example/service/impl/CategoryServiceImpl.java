@@ -45,8 +45,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryByName(String name) {
-        Category category=categoryRepository.getByName(name);
-        return objectMapper.convertValue(category,CategoryDto.class);
+        try {
+            Category category = categoryRepository.getByName(name);
+            return objectMapper.convertValue(category, CategoryDto.class);
+        }catch (Exception exception){
+            return CategoryDto.builder().id(null).name(null).build();
+        }
     }
 
     @Override

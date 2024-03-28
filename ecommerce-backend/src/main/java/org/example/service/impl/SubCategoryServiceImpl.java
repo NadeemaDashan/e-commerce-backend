@@ -40,15 +40,31 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Override
     public SubCategoryDto getSubCategoryById(Long id) {
-        SubCategory subCategory=subCategoryRepository.findById(id).get();
-        if (subCategory.getId()==null){
+        try {
+            SubCategory subCategory = subCategoryRepository.findById(id).get();
+            if (subCategory.getId() == null) {
+                return null;
+            }
+            return objectMapper.convertValue(subCategory, SubCategoryDto.class);
+        }catch (Exception exception){
             return null;
         }
-        return objectMapper.convertValue(subCategory,SubCategoryDto.class);
     }
 
     @Override
-    public boolean deleteSubCategoryByName(String name) {
-        return false;
+    public boolean deleteSubCategoryById(Long id) {
+        subCategoryRepository.deleteById(id);
+       SubCategoryDto subCategoryDto=getSubCategoryById(id);
+        return subCategoryDto == null;
+    }
+
+    @Override
+    public SubCategoryDto getCategoryByName(String name) {
+        try {
+            SubCategory subCategory=subCategoryRepository.getByName(name);
+            return objectMapper.convertValue(subCategory,SubCategoryDto.class);
+        }catch (Exception exception){
+            return null;
+        }
     }
 }

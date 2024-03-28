@@ -12,5 +12,7 @@ public interface SubCategoryService {
 
     SubCategoryDto getSubCategoryById(Long id);
 
-    boolean deleteSubCategoryByName(String name);
+    boolean deleteSubCategoryById(Long id);
+
+    SubCategoryDto getCategoryByName(String name);
 }

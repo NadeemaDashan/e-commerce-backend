@@ -2,19 +2,22 @@ package org.example.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.dto.CategoryDto;
+import org.example.dto.CollectionDto;
 import org.example.dto.ProductDto;
+import org.example.dto.SubCategoryDto;
 import org.example.entity.Category;
+import org.example.entity.Collection;
 import org.example.entity.Product;
+import org.example.entity.SubCategory;
 import org.example.repository.ProductRepository;
 import org.example.service.CategoryService;
+import org.example.service.CollectionService;
 import org.example.service.ProductService;
+import org.example.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -23,9 +26,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private SubCategoryService subCategoryService;
 
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    private CollectionService collectionService;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -33,18 +40,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean addProduct(ProductDto productDto) {
-        if (productDto.getCategory().getName()==null){
+        CategoryDto category=categoryService.getCategoryByName(productDto.getCategory().getName());
+        if (category.getId()==null){
             return false;
         }
-        CategoryDto category=categoryService.getCategoryByName(productDto.getCategory().getName());
+        SubCategoryDto subCategoryDto =subCategoryService.getCategoryByName(productDto.getSubCategory().getName());
+        CollectionDto collection=collectionService.getCategoryByName(productDto.getCollection().getName());
         Long id=category.getId();
+
         Product product = Product.builder().
                 name(productDto.getName())
                 .id(productDto.getId())
                 .desc(productDto.getDesc())
                 .price(productDto.getPrice())
                 .soldCount(productDto.getSoldCount())
-                .category(Category.builder().id(id).name(productDto.getCategory().getName()).build()).build();
+                .category(Category.builder().id(id).name(category.getName()).build())
+                .subCategory(SubCategory.builder()
+                        .id(subCategoryDto.getId())
+                        .name(subCategoryDto.getName())
+                        .build())
+                .collection(Collection.builder()
+                        .id(collection.getId())
+                        .name(collection.getName())
+                        .build()).build();
+
         Product product1=productRepository.save(product);
         if (product1.getId()!=null){
             return true;
@@ -64,6 +83,14 @@ public class ProductServiceImpl implements ProductService {
                     (Category.builder()
                             .id(product.getCategory().getId())
                             .name(product.getCategory().getName()).build());
+            productDto.setSubCategory
+                    (SubCategory.builder()
+                            .id(product.getSubCategory().getId())
+                            .name(product.getSubCategory().getName()).build());
+            productDto.setCollection
+                    (Collection.builder()
+                            .id(product.getCollection().getId())
+                            .name(product.getCollection().getName()).build());
             list.add(productDto);
         }
         return list;
@@ -78,6 +105,14 @@ public class ProductServiceImpl implements ProductService {
                     setCategory(Category.builder()
                             .id(product.getCategory().getId())
                             .name(product.getCategory().getName()).build());
+            productDto.setSubCategory
+                    (SubCategory.builder()
+                            .id(product.getSubCategory().getId())
+                            .name(product.getSubCategory().getName()).build());
+            productDto.setCollection
+                    (Collection.builder()
+                            .id(product.getCollection().getId())
+                            .name(product.getCollection().getName()).build());
             return productDto;
         }
         return null;
@@ -88,10 +123,11 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> listOfALlProducts=getAllProducts();
         List<ProductDto> listOfSpecificProducts = new ArrayList<>();
         for (ProductDto productDto:listOfALlProducts){
-            if (productDto.getCategory().getName()==categoryName){
+            if (Objects.equals(productDto.getCategory().getName(), categoryName)){
                 listOfSpecificProducts.add(productDto);
             }
         }
         return listOfSpecificProducts;
     }
+    //TODO IF NEEDED SUBCATEGORY OR COLLECTION BY GETTING PRODUCT CAN BE IMPLEMENT
 }

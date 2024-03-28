@@ -35,10 +35,12 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "sub_category_id")
+    @JsonIgnore
     private SubCategory subCategory;
 
     @ManyToOne
     @JoinColumn(name = "collection_id")
+    @JsonIgnore
     private Collection collection;
 
     @Column(name = "sold_count")

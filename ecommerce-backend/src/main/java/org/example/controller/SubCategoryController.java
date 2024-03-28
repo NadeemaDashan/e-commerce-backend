@@ -35,6 +35,16 @@ public class SubCategoryController {
         return subCategoryService.getSubCategoryById(id);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteSubCategoryById(@PathVariable Long id){
+       boolean isDeleted= subCategoryService.deleteSubCategoryById(id);
+       return isDeleted ?"Sub category is deleted":"Something went wrong";
+    }
+    @GetMapping("/get/name/{name}")
+    public SubCategoryDto getSubcategoryByName(@PathVariable String name){
+       return subCategoryService.getCategoryByName(name);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> error(MethodArgumentNotValidException exception){
