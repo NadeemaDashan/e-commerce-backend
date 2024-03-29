@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.example.util.converter.OrderStatusConverter;
 import org.example.util.enums.OrderStatus;
 
+import java.math.BigInteger;
+
 
 @Entity
 @Builder
@@ -20,9 +22,6 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "CustomerID")
-    private String customerId ;
-
     @OneToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
@@ -34,16 +33,16 @@ public class Orders {
     private String phone;
 
     @Column(name ="Tax" , nullable = false)
-    private String tax;
+    private BigInteger tax;
 
     @Column(name ="Delivery Charge" , nullable = false)
     private String charge;
 
     @Column(name = "Land Code" , nullable = false)
-    private String zipCode;
+    private Integer zipCode;
 
     @Column(name = "Order Total" , nullable = false)
-    private Long Tot;
+    private Long tot;
 
     @Column(name = "City" , nullable = false)
     private String city;
