@@ -1,10 +1,10 @@
 package org.example.controller;
-
-import jakarta.validation.Valid;
-import org.example.dto.ProductDto;
-import org.example.service.ProductService;
+import org.example.dto.StockDto;
+import org.example.entity.Stock;
+import org.example.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,41 +16,29 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/product")
-public class ProductController {
-    @Valid
+@RequestMapping("/stock")
+public class StockController {
     @Autowired
-    private ProductService productService;
+    StockService stockService;
 
     @PostMapping("/add")
-    public String addProduct(@Valid @RequestBody ProductDto productDto){
-        boolean isSaved=productService.addProduct(productDto);
-        if (isSaved==false){
-            return "unsuccessful due to category,subcategory or collection is empty";
-        }
-        return "Product successfully saved";
-    }
-
-    @GetMapping("/get/all")
-    public List<ProductDto> getAllProducts(){
-        return productService.getAllProducts();
+    public boolean addStock(@RequestBody StockDto stock) {
+        return stockService.addStock(stock);
     }
 
     @GetMapping("/get/{id}")
-    public ProductDto getProductById(@Valid @PathVariable Long id){
-       return productService.getProductById(id);
+    public ResponseEntity<List<StockDto>> listStock(@PathVariable Long id) {
+        List<StockDto> stockDTOList = stockService.listStock(id);
+        return ResponseEntity.ok(stockDTOList);
     }
-
-    @GetMapping("/get/category/{category}")
-    public List getProductByCategory(@PathVariable String category){
-        return productService.getProductByCategory(category);
+    @PutMapping ("/update/{id}")
+    public StockDto updateStock(@PathVariable Long id, @RequestBody StockDto stockDto) {
+        return stockService.updateStock(id, stockDto);
     }
-
-    @GetMapping("/get/name/{name}")
-    public ProductDto getProductByName(@PathVariable String name){
-        return productService.getProductByName(name);
+    @DeleteMapping("/remove/{id}")
+    public Boolean  deleteStock(@PathVariable Long id){
+        return stockService.deleteStock(id);
     }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> error(MethodArgumentNotValidException exception){

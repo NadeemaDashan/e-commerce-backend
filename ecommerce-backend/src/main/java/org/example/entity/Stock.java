@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,9 +53,10 @@ public class Stock {
 
     @ManyToOne
     @JoinColumn(name = "productId")
+    @JsonIgnore
     private Product product;
 
-    @OneToOne(mappedBy = "stockId") // Update mappedBy to match the property name in the Cart entity
+    @OneToOne(mappedBy = "stockId")
     private Cart cart;
 
     @Column(name = "Color")
