@@ -56,7 +56,7 @@ public class Stock {
     @JsonIgnore
     private Product product;
 
-    @OneToOne(mappedBy = "stockId")
+    @OneToOne(mappedBy = "stock")
     private Cart cart;
 
     @Column(name = "Color")

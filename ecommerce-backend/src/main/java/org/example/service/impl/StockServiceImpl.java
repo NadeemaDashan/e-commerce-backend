@@ -8,7 +8,6 @@ import org.example.entity.Stock;
 import org.example.repository.StockRepository;
 import org.example.service.ProductService;
 import org.example.service.StockService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +73,23 @@ public class  StockServiceImpl implements StockService {
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public StockDto getStockById(long id){
+        Optional<Stock> stockOptional = stockRepository.findById(id);
+
+        if (stockOptional.isPresent()) {
+            Stock stock = stockOptional.get();
+            Long productId = stock.getProduct().getId();
+            ProductDto productDto = productService.getProductById(productId);
+            StockDto stockDto=mapper.convertValue(stock,StockDto.class);
+            stockDto.setProduct(Product.builder().id(productDto.getId()).name(productDto.getName()).build());
+            return stockDto;
+        }
+        return null;
+    }
+
+
     private StockDto convertStockToDTO(Stock stock) {
         StockDto stockDTO = new StockDto();
         stockDTO.setId(stock.getId());

@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,8 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "stock_id")
-    private Stock stockId;
+    @JsonIgnore
+    private Stock stock;
 
     @Column(name = "Quantity")
     private int qty;
@@ -29,4 +31,6 @@ public class Cart {
 
     @OneToOne(mappedBy = "cart")
     private Orders orders;
+
+    private Boolean completed;
 }

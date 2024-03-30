@@ -1,10 +1,10 @@
 package org.example.controller;
-import org.example.dto.StockDto;
-import org.example.entity.Stock;
-import org.example.service.StockService;
+
+import org.example.dto.CartDto;
+import org.example.entity.Cart;
+import org.example.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,39 +16,39 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/stock")
-public class StockController {
+@RequestMapping("/cart")
+public class CartController {
     @Autowired
-    StockService stockService;
-
+    private CartService cartService;
     @PostMapping("/add")
-    public boolean addStock(@RequestBody StockDto stock) {
-        return stockService.addStock(stock);
+    public boolean addCart(@RequestBody CartDto cartDto){
+        return cartService.addCart(cartDto);
+    }
+
+    @GetMapping("/getAll")
+    public List<CartDto> getAllCartDetails(){
+        return cartService.getAllCartDetails();
+    }
+
+    @PutMapping("/update/{id}")
+    public Cart updateCart(@PathVariable Long id, @RequestBody CartDto cartDto) {
+        return cartService.upadateCart(id,cartDto);
+    }
+
+    @PutMapping("/delete/{id}")
+    public Boolean updateStatus(@PathVariable long id){
+        return cartService.updateStatus(id);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<List<StockDto>> listStock(@PathVariable Long id) {
-        List<StockDto> stockDTOList = stockService.listStock(id);
-        return ResponseEntity.ok(stockDTOList);
-    }
-    @PutMapping ("/update/{id}")
-    public StockDto updateStock(@PathVariable Long id, @RequestBody StockDto stockDto) {
-        return stockService.updateStock(id, stockDto);
-    }
-    @DeleteMapping("/remove/{id}")
-    public Boolean  deleteStock(@PathVariable Long id){
-        return stockService.deleteStock(id);
-    }
-
-    @GetMapping("get/stock/{id}")
-    public StockDto getStockById(@PathVariable long id){
-        return stockService.getStockById(id);
+    public CartDto getCartById(@PathVariable long id){
+        return cartService.getCartById(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> error(MethodArgumentNotValidException exception){
-        Map <String, String> map=new HashMap<>();
+        Map<String, String> map=new HashMap<>();
         List<ObjectError> list=exception.getBindingResult().getAllErrors();
         for(ObjectError item:list) {
             FieldError fieldError=(FieldError) item;
