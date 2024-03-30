@@ -2,12 +2,10 @@ package org.example.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.dto.CollectionDto;
-import org.example.dto.SubCategoryDto;
-import org.example.entity.SubCategory;
+import org.example.entity.Collection;
 import org.example.repository.CollectionRepository;
 import org.example.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.example.entity.Collection;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
