@@ -55,6 +55,16 @@ public class  StockServiceImpl implements StockService {
         }
 
     }
+    public List<Stock> getStockAccordingToSizeAndProduct(String size,Long id){
+        List<Stock> stockList=stockRepository.findBySizeAndProductId(size,id);
+        if (stockList.isEmpty()) {
+
+            return Collections.emptyList();
+        } else {
+
+            return stockList;
+        }
+    }
 
     @Override
     public List<StockDto> listStock(Long id) {

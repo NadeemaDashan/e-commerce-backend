@@ -22,7 +22,7 @@ public class Product {
     @Column(name = "product_name")
     private String name;
 
-    @Column(name = "total_description")
+    @Column(name = "total_description",length = 999999)
     private  String desc;
 
     @Column(name = "price")

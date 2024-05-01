@@ -26,10 +26,10 @@ public class StockController {
         return stockService.addStock(stock);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<List<StockDto>> listStock(@PathVariable Long id) {
-        List<StockDto> stockDTOList = stockService.listStock(id);
-        return ResponseEntity.ok(stockDTOList);
+    @GetMapping("/get")
+    public List listStock(@RequestParam String size, @RequestParam Long id) {
+        List<Stock> stockDTOList = stockService.getStockAccordingToSizeAndProduct(size,id);
+        return stockDTOList;
     }
     @PutMapping ("/update/{id}")
     public StockDto updateStock(@PathVariable Long id, @RequestBody StockDto stockDto) {
