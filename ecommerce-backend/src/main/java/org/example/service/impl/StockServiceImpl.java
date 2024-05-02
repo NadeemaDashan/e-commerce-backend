@@ -105,8 +105,8 @@ public class  StockServiceImpl implements StockService {
         stockDTO.setId(stock.getId());
         stockDTO.setColor(stock.getColor());
         stockDTO.setSize(stock.getSize());
-        stockDTO.setPrice(Double.valueOf(stock.getPrice()));
-        stockDTO.setQty(Integer.parseInt(stock.getQty()));
+        stockDTO.setPrice(stock.getPrice());
+        stockDTO.setQty(stock.getQty());
         return stockDTO;
     }
 

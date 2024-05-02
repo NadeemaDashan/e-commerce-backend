@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,11 @@ public class StockController {
     @GetMapping("/get")
     public List listStock(@RequestParam String size, @RequestParam Long id) {
         List<Stock> stockDTOList = stockService.getStockAccordingToSizeAndProduct(size,id);
+        if (stockDTOList.size() == 0){
+             List list=new ArrayList();
+             list.add("not valid");
+             return list;
+        }
         return stockDTOList;
     }
     @PutMapping ("/update/{id}")
