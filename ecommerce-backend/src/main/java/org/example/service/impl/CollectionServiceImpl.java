@@ -26,6 +26,12 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
+    public CollectionDto getCollectionByName(String name) {
+        Collection collection=collectionRepository.getByName(name);
+        return objectMapper.convertValue(collection,CollectionDto.class);
+    }
+
+    @Override
     public List<CollectionDto> getAllCollection() {
         Iterable<Collection> collections =collectionRepository.findAll();
         List<CollectionDto> collectionDtoList= new ArrayList<>();

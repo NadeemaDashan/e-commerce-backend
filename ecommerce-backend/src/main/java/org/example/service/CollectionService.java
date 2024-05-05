@@ -15,4 +15,6 @@ public interface CollectionService {
     CollectionDto getCategoryByName(String name);
 
     boolean saveCollection(CollectionDto collectionDto);
+    CollectionDto getCollectionByName(String name);
+
 }
