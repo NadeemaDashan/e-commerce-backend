@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.entity.Customer;
 import org.example.entity.Stock;
 
 @Data
@@ -23,5 +24,6 @@ public class CartDto {
     @NotBlank(message = "Quantity  is can't be null")
     private int qty;
     private Double productTot;
+    private Customer customer;
     private boolean isCompleted;
 }

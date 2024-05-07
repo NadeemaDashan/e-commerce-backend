@@ -136,4 +136,16 @@ public class ProductServiceImpl implements ProductService {
         return objectMapper.convertValue(product,ProductDto.class);
     }
 
+    @Override
+    public List<ProductDto> getProductBySubCategory(String subCategory) {
+        List<ProductDto> listOfALlProducts=getAllProducts();
+        List<ProductDto> listOfSpecificProducts = new ArrayList<>();
+        for (ProductDto productDto:listOfALlProducts){
+            if (Objects.equals(productDto.getSubCategory().getName(), subCategory)){
+                listOfSpecificProducts.add(productDto);
+            }
+        }
+        return listOfSpecificProducts;
+    }
+
 }

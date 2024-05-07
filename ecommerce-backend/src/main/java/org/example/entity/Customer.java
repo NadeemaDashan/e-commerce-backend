@@ -36,4 +36,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<BillingInfo> billingInfo;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Cart> cart;
 }
