@@ -1,5 +1,8 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Table(name = "customer")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +35,15 @@ public class Customer {
     @Column(name ="Contact")
     private String phone;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Orders> orders;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<BillingInfo> billingInfo;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Cart> cart;
 }

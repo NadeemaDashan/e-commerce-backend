@@ -10,9 +10,9 @@ public interface CartService {
 
     List<CartDto> getAllCartDetails();
 
-    Cart upadateCart(Long id, CartDto cartDto);
-
     boolean updateStatus(long id);
 
     CartDto getCartById(long id);
+
+    List<CartDto> getCartByCustomer(long id);
 }

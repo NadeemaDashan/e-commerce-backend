@@ -148,4 +148,10 @@ public class ProductServiceImpl implements ProductService {
         return listOfSpecificProducts;
     }
 
+    @Override
+    public Product getProductByStockId(long id) {
+        Product product=productRepository.getByStocksId(id);
+        return product;
+    }
+
 }

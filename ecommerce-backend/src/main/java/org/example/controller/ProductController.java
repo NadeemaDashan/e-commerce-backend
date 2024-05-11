@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import org.example.dto.ProductDto;
+import org.example.entity.Product;
 import org.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,10 @@ public class ProductController {
         return productService.getProductByName(name);
     }
 
+    @GetMapping("/get/stock/{id}")
+    public Product getProductByStockId(@PathVariable long id){
+        return productService.getProductByStockId(id);
+    }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> error(MethodArgumentNotValidException exception){

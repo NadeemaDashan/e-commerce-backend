@@ -49,7 +49,8 @@ public class Product {
     @OneToOne(mappedBy = "product",cascade = CascadeType.ALL)
     private Sales sales;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Stock> stocks;
 
     @Lob
