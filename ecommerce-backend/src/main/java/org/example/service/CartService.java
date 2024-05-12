@@ -15,4 +15,8 @@ public interface CartService {
     CartDto getCartById(long id);
 
     List<CartDto> getCartByCustomer(long id);
+
+    Boolean deleteItemById(long id);
+
+    Boolean updateAddCart(Long id);
 }
