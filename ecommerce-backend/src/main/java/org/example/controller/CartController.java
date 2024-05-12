@@ -36,6 +36,11 @@ public class CartController {
         return cartService.updateAddCart(id);
     }
 
+    @PutMapping("/update/sub/{id}")
+    public Boolean updateSubCart(@PathVariable Long id){
+        return cartService.updateSubCart(id);
+    }
+
     @DeleteMapping("/delete/{id}")
     public Boolean updateStatus(@PathVariable long id){
         return cartService.deleteItemById(id);

@@ -19,4 +19,6 @@ public interface CartService {
     Boolean deleteItemById(long id);
 
     Boolean updateAddCart(Long id);
+
+    Boolean updateSubCart(Long id);
 }

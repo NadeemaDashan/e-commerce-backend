@@ -89,8 +89,21 @@ public class CartServiceImpl implements CartService {
         CartDto cartDto=getCartById(id);
         cartDto.setQty(cartDto.getQty()+1);
         double priceOfEachStock=cartDto.getStock().getPrice();
-        double finalprice=priceOfEachStock*cartDto.getQty();
-        cartDto.setProductTot(finalprice);
+        double finalPrice=priceOfEachStock*cartDto.getQty();
+        cartDto.setProductTot(finalPrice);
+        cartRepository.deleteById(id);
+        Cart cart=mapper.convertValue(cartDto,Cart.class);
+        cartRepository.save(cart);
+        return true;
+    }
+
+    @Override
+    public Boolean updateSubCart(Long id) {
+        CartDto cartDto=getCartById(id);
+        cartDto.setQty(cartDto.getQty()-1);
+        double priceOfEachStock=cartDto.getStock().getPrice();
+        double finalPrice=priceOfEachStock*cartDto.getQty();
+        cartDto.setProductTot(finalPrice);
         cartRepository.deleteById(id);
         Cart cart=mapper.convertValue(cartDto,Cart.class);
         cartRepository.save(cart);
