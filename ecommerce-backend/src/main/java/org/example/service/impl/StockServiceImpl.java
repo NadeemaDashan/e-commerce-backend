@@ -11,6 +11,7 @@ import org.example.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -55,20 +56,39 @@ public class  StockServiceImpl implements StockService {
         }
 
     }
-    public List<Stock> getStockAccordingToSizeAndProduct(String size,Long id){
+    public List<StockDto> getStockAccordingToSizeAndProduct(String size, Long id){
         List<Stock> stockList=stockRepository.findBySizeAndProductId(size,id);
         if (stockList.isEmpty()) {
-
             return Collections.emptyList();
         } else {
-
-            return stockList;
+            return convertStockListToDto(stockList);
         }
+    }
+
+    private List<StockDto> convertStockListToDto(List<Stock> stock) {
+        List<StockDto> newList= new ArrayList<>();
+        for(Stock stockB:stock){
+            StockDto stockDto = new StockDto();
+            Product product = new Product();
+            product.setId(stockB.getProduct().getId());
+            product.setPrice(stockB.getProduct().getPrice());
+            product.setName(stockB.getProduct().getName());
+
+            stockDto.setPrice(stockB.getPrice());
+            stockDto.setSize(stockB.getSize());
+            stockDto.setQty(stockB.getQty());
+            stockDto.setId(stockB.getId());
+            stockDto.setColor(stockB.getColor());
+            stockDto.setProduct(product);
+            newList.add(stockDto);
+        }
+        return newList;
     }
 
     @Override
     public List<StockDto> listStock(Long id) {
         Optional<Stock> stockOptional = stockRepository.findById(id);
+
 
         if (stockOptional.isPresent()) {
             Stock stock = stockOptional.get();

@@ -80,6 +80,7 @@ public class CartServiceImpl implements CartService {
             Stock stock = new Stock();
             Product product = new Product();
             stock.setSize(cart.getStock().getSize());
+            stock.setQty(cart.getStock().getQty());
             stock.setColor(cart.getStock().getColor());
             stock.setId(cart.getStock().getId());
             stock.setPrice(cart.getStock().getPrice());

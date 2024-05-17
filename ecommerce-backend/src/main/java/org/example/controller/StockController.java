@@ -29,12 +29,7 @@ public class StockController {
 
     @GetMapping("/get")
     public List listStock(@RequestParam String size, @RequestParam Long id) {
-        List<Stock> stockDTOList = stockService.getStockAccordingToSizeAndProduct(size,id);
-        if (stockDTOList.size() == 0){
-             List list=new ArrayList();
-             list.add("not valid");
-             return list;
-        }
+        List<StockDto> stockDTOList = stockService.getStockAccordingToSizeAndProduct(size,id);
         return stockDTOList;
     }
     @PutMapping ("/update/{id}")

@@ -3,7 +3,6 @@ package org.example.service;
 
 
 import org.example.dto.StockDto;
-import org.example.entity.Stock;
 
 import java.util.List;
 
@@ -17,5 +16,5 @@ public interface StockService {
     List<StockDto> listStock(Long id);
 
     StockDto getStockById(long id);
-    List<Stock> getStockAccordingToSizeAndProduct(String size,Long id);
+    List<StockDto> getStockAccordingToSizeAndProduct(String size, Long id);
 }

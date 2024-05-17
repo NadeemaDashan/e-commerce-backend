@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class DistanceServiceImpl {
-    private String apiKey="AIzaSyCEBtTPwHD0mXLMRL-1kJ2Cj-ueZP3LAUk";
+    private final String apiKey="AIzaSyCEBtTPwHD0mXLMRL-1kJ2Cj-ueZP3LAUk";
 
     public ResponseEntity<DistanceMatrixDto> getDistance(String origin, String destination) throws Exception{
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin

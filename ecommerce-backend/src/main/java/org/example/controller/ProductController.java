@@ -39,7 +39,7 @@ public class ProductController {
 
     @GetMapping("/get/{id}")
     public ProductDto getProductById(@Valid @PathVariable Long id){
-       return productService.getProductById(id);
+        return productService.getProductById(id);
     }
 
     @GetMapping("/get/category/{category}")
