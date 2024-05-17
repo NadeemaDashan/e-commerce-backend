@@ -22,7 +22,7 @@ public class BillingInfo{
     @JoinColumn(name = "orders_id")
     private Orders orders;
 
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

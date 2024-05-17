@@ -50,7 +50,7 @@ public class Orders {
     @OneToOne(mappedBy = "orders")
     private BillingInfo billingInfo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

@@ -43,7 +43,6 @@ public class Customer {
     @JsonIgnore
     private List<BillingInfo> billingInfo;
 
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
     private List<Cart> cart;
 }

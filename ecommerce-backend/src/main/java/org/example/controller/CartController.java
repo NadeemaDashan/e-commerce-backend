@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.dto.CartDto;
-import org.example.entity.Cart;
 import org.example.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,14 +31,19 @@ public class CartController {
         return cartService.getAllCartDetails();
     }
 
-//    @PutMapping("/update/{id}")
-//    public Cart updateCart(@PathVariable Long id, @RequestBody CartDto cartDto) {
-//        return cartService.updateCart(id, cartDto);
-//    }
+    @PutMapping("/update/add/{id}")
+    public Boolean updateCart(@PathVariable Long id) {
+        return cartService.updateAddCart(id);
+    }
 
-    @PutMapping("/delete/{id}")
+    @PutMapping("/update/sub/{id}")
+    public Boolean updateSubCart(@PathVariable Long id){
+        return cartService.updateSubCart(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
     public Boolean updateStatus(@PathVariable long id){
-        return cartService.updateStatus(id);
+        return cartService.deleteItemById(id);
     }
 
     @GetMapping("/get/{id}")
