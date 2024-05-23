@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 public class CollectionDto {
     @Valid

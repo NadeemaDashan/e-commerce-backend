@@ -23,4 +23,5 @@ public class CategoryDto {
     @NotBlank(message = "category name is null")
     @Size(min = 2,message = "Name is too short try again")
     private String name;
+
 }

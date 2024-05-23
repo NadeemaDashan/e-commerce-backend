@@ -88,16 +88,13 @@ public class  StockServiceImpl implements StockService {
     @Override
     public List<StockDto> listStock(Long id) {
         Optional<Stock> stockOptional = stockRepository.findById(id);
-
-
         if (stockOptional.isPresent()) {
             Stock stock = stockOptional.get();
             Long productId=stock.getProduct().getId();
             ProductDto productDto=productService.getProductById(productId);
             StockDto convertedStock=convertStockToDTO(stock);
             convertedStock.setProduct(Product.builder().id(productDto.getId()).name(productDto.getName()).build());
-            List<StockDto> stockDTOList = Collections.singletonList(convertedStock);
-            return stockDTOList;
+            return Collections.singletonList(convertedStock);
         } else {
 
             return Collections.emptyList();
